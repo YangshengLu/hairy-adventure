@@ -1,29 +1,16 @@
+# -*- coding: utf8 -*-
 __author__ = 'luyangsheng'
 
 import tornado.ioloop
 import tornado.web
 import tornado.log
-import logging
-import json
-import mysql.connector
+import setting
 
 
-class MainHandler(tornado.web.RequestHandler):
-
-    def get(self):
-        self.write("首页")
-
-    def post(self):
-        try:
-            hello = self.get_body_argument("hello")
-        except tornado.web.MissingArgumentError as e:
-            logging.exception(e)
-        print(hello)
-        self.write(hello)
-
-app = tornado.web.Application([
-    (r'/', MainHandler),
-])
+app = tornado.web.Application(
+    setting.urls,
+    setting.options
+)
 
 if __name__ == "__main__":
     app.listen(port=12306)

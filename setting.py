@@ -1,16 +1,32 @@
+# -*- coding: utf8 -*-
 __author__ = 'luyangsheng'
 from sqlalchemy import create_engine
+import handlers
 
-__database_config__ = {
+
+# database settings
+__DB_URL_FORMAT__ = "mysql+mysqlconnector://%(user)s:%(password)s@%(host)s:%(port)s/%(database)s"
+__db_config__ = {
     "host": "localhost",
     "port": 3306,
     "user": "root",
     "password": "root",
     "database": "db_sys",
 }
-__DATABASE_URL_FORMAT__ = "mysql+mysqlconnector://%(user)s:%(password)s@%(host)s:%(port)s/%(database)s"
+engine = create_engine(
+    __DB_URL_FORMAT__ % __db_config__,
+    encoding="utf8",
+    echo=False
+)
 
 
-__db_url = __DATABASE_URL_FORMAT__ % __database_config__
-engine = create_engine(__db_url, encoding="utf8", echo=False)
+# url map setting
+urls = (
+    (r'/', handlers.MainHandler),
+)
 
+
+# other sever options
+options = {
+    "cookie_secret": "3087c29ddaaed0a7671093b3eb00ad4a",
+}

@@ -11,7 +11,7 @@ class Admin(Base):
 
     __tablename__ = 'db_sys_admin'
 
-    username = Column(String(length=20))
+    username = Column(String(length=20), primary_key=True)
     password = Column(String(length=32))
 
 
@@ -33,7 +33,7 @@ class Doctor(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     id_card_num = Column(String(length=18), nullable=False)
     name = Column(String(length=50), nullable=False)
-    gender = Column(Enum(('男', '女')))
+    gender = Column(Enum(u'男', u'女'))
     department = Column(String(length=20), nullable=False)
     tel = Column(String(length=20), nullable=False)
 
@@ -48,7 +48,7 @@ class SickRoom(Base):
 
 class Patient(Base):
 
-    __tablename = "patient"
+    __tablename__ = "patient"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     id_card_num = Column(Integer, primary_key=True, nullable=False)
