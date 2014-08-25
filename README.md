@@ -6,7 +6,8 @@ hairy-adventure
 + 依赖模块在requirements.txt中有说明
 + Linux有pip时直接使用下面的命令安装依赖
 
-        cat requirements.txt | xargs sudo pip install --upgrade
+        sudo pip install -r requirements.txt
 
-+ Windows请自己Google...，当然你也可以Baidu
++ Windows请用
+        python -m pip install -r requirements.txt
 
