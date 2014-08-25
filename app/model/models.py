@@ -1,8 +1,10 @@
 # coding=utf-8
 __author__ = 'luyangsheng'
 from sqlalchemy.ext.declarative import declarative_base as _declarative_base
-from setting import engine as _engine
 from sqlalchemy import Column, String, Integer as Integer, Float, Enum as Enum
+
+from app.common.setting import engine as _engine
+
 
 _Base = _declarative_base(_engine)
 

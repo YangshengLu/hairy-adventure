@@ -1,5 +1,11 @@
 # coding=utf-8
+from app.common import setting
+
 __author__ = 'luyangsheng'
+from flask import Flask
+from flask import request, g
+from flask.sessions import SessionInterface
+from beaker.middleware import SessionMiddleware
 from sqlalchemy import create_engine as _create_engine
 from sqlalchemy.orm.session import sessionmaker as _sessionmaker
 import logging
@@ -41,14 +47,51 @@ session_setting = {
     "key": "PHPSESSIONID",
 }
 
+app = Flask(__name__)
+app.config.update(**options)
 
 # logging config
 _log_config = {
     "level": logging.DEBUG,
     "format": "[%(asctime)s][%(levelname)s]--%(name)s--:%(message)s",
 }
-
 if not debug:
     _log_config['file'] = "hsp_sys.log"
-
 logging.basicConfig(**_log_config)
+
+
+class BeakerSessionInterface(SessionInterface):
+
+    def open_session(self, _app, _request):
+        _session = request.environ['beaker.session']
+        return _session
+
+    def save_session(self, _app, _session, response):
+        _session.save()
+
+
+# initial database session before request
+@app.before_request
+def before_request():
+    g.db_session = Session()
+
+
+# close database session after request
+@app.teardown_request
+def teardnow_request(exception):
+    if exception:
+        app.logger.exception(exception)
+    if g.db_session:
+        try:
+            g.db_session.close()
+        except Exception as e:
+            app.logger.exception(e)
+
+app.wsgi_app = SessionMiddleware(
+    app.wsgi_app,
+    session_opts,
+    **session_setting
+)
+app.session_interface = BeakerSessionInterface()
+
+from controller import *
