@@ -1,5 +1,4 @@
 # coding=utf-8
-from app.common import setting
 
 __author__ = 'luyangsheng'
 from flask import Flask

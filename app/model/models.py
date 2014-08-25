@@ -3,10 +3,8 @@ __author__ = 'luyangsheng'
 from sqlalchemy.ext.declarative import declarative_base as _declarative_base
 from sqlalchemy import Column, String, Integer as Integer, Float, Enum as Enum
 
-from app.common.setting import engine as _engine
-
-
-_Base = _declarative_base(_engine)
+from app import engine
+_Base = _declarative_base(engine)
 
 
 class Admin(_Base):
