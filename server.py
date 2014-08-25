@@ -1,6 +1,6 @@
 __author__ = 'luyangsheng'
 from flask import Flask
-from flask import render_template, request, session, g
+from flask import render_template, request, session, g, send_from_directory
 from flask.sessions import SessionInterface
 import setting
 from setting import logging
@@ -36,6 +36,21 @@ def teardnow_request(exception):
             g.db_session.close()
         except Exception as e:
             app.logger.exception(e)
+
+
+# static file config
+@app.route("/css/<path:filename>")
+def css_static(filename):
+    return send_from_directory("static/css", filename)
+
+@app.route("/js/<path:filename>")
+def js_static(filename):
+    return send_from_directory("static/js", filename)
+
+@app.route("/fonts/<path:filename>")
+def fonts_static(filename):
+    return send_from_directory("static/fonts", filename)
+
 
 
 @app.route("/", methods=["GET", "POST"])
