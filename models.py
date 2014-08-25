@@ -1,21 +1,21 @@
-# -＊- coding: utf8 -*-
+# coding=utf-8
 __author__ = 'luyangsheng'
-from sqlalchemy.ext.declarative import declarative_base
-from setting import engine
-from sqlalchemy import Column, String, Integer, Float, Enum
+from sqlalchemy.ext.declarative import declarative_base as _declarative_base
+from setting import engine as _engine
+from sqlalchemy import Column, String, Integer as Integer, Float, Enum as Enum
 
-Base = declarative_base(engine)
+_Base = _declarative_base(_engine)
 
 
-class Admin(Base):
+class Admin(_Base):
 
     __tablename__ = 'db_sys_admin'
 
     username = Column(String(length=20), primary_key=True)
-    password = Column(String(length=32))
+    password = Column(String(length=32), nullable=False)
 
 
-class Medicine(Base):
+class Medicine(_Base):
 
     __tablename__ = "medicine"
 
@@ -26,7 +26,7 @@ class Medicine(Base):
     desc = Column(String(length=200), nullable=True)
 
 
-class Doctor(Base):
+class Doctor(_Base):
 
     __tablename__ = "doctor"
 
@@ -38,7 +38,7 @@ class Doctor(Base):
     tel = Column(String(length=20), nullable=False)
 
 
-class SickRoom(Base):
+class SickRoom(_Base):
 
     __tablename__ = "sick_room"
 
@@ -46,7 +46,7 @@ class SickRoom(Base):
     address = Column(String(length=100), unique=True)
 
 
-class Patient(Base):
+class Patient(_Base):
 
     __tablename__ = "patient"
 
@@ -57,4 +57,4 @@ class Patient(Base):
     tel = Column(String(length=20), nullable=False)
 
 
-Base.metadata.create_all()
+_Base.metadata.create_all()
