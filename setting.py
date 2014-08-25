@@ -9,7 +9,7 @@ debug = True
 
 
 # database settings
-_DB_URL_FORMAT = "mysql+mysqlconnector://%(user)s:%(password)s@%(host)s:%(port)s/%(database)s"
+_DB_URL_FORMAT = "mysql://%(user)s:%(password)s@%(host)s:%(port)s/%(database)s"
 _db_config = {
     "host": "localhost",
     "port": 3306,

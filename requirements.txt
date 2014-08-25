@@ -1,3 +1,4 @@
 sqlalchemy
 beaker
 flask
+MySQL-python
