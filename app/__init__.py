@@ -46,7 +46,7 @@ session_setting = {
     "key": "PHPSESSIONID",
 }
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="")
 app.config.update(**options)
 
 # logging config
@@ -56,6 +56,9 @@ _log_config = {
 }
 if not debug:
     _log_config['file'] = "hsp_sys.log"
+else:
+    import sys
+    _log_config["stream"] = sys.stdout
 logging.basicConfig(**_log_config)
 
 
