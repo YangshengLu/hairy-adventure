@@ -56,9 +56,6 @@ _log_config = {
 }
 if not debug:
     _log_config['file'] = "hsp_sys.log"
-else:
-    import sys
-    _log_config["stream"] = sys.stdout
 logging.basicConfig(**_log_config)
 
 

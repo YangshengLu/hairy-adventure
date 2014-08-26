@@ -3,7 +3,7 @@ from app import app
 __author__ = 'luyangsheng'
 
 
-@app.route("/patient_register", methods=["GET", "POST"])
-def patient_register():
+@app.route("/patient/register", methods=["GET", "POST"])
+def register():
     if request.method == "GET":
-        return render_template("patient_register.html")
+        return render_template("patient/register.html")
