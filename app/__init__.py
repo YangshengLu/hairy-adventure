@@ -5,8 +5,6 @@ from flask import Flask
 from flask import request, g
 from flask.sessions import SessionInterface
 from beaker.middleware import SessionMiddleware
-from sqlalchemy import create_engine as _create_engine
-from sqlalchemy.orm.session import sessionmaker as _sessionmaker
 import logging
 
 # global server envrionment options
@@ -22,13 +20,6 @@ _db_config = {
     "password": "root",
     "database": "db_sys",
 }
-engine = _create_engine(
-    _DB_URL_FORMAT % _db_config,
-    encoding="utf8",
-    echo=False
-)
-Session = _sessionmaker(bind=engine)
-
 
 # other sever options
 options = {
@@ -72,19 +63,13 @@ class BeakerSessionInterface(SessionInterface):
 # initial database session before request
 @app.before_request
 def before_request():
-    g.db_session = Session()
+    pass
 
 
 # close database session after request
 @app.teardown_request
 def teardnow_request(exception):
-    if exception:
-        app.logger.exception(exception)
-    if g.db_session:
-        try:
-            g.db_session.close()
-        except Exception as e:
-            app.logger.exception(e)
+    pass
 
 app.wsgi_app = SessionMiddleware(
     app.wsgi_app,
